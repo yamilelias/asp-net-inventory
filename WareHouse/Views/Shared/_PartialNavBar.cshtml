@@ -1,0 +1,24 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+    <a href=@Url.Action("About", "Home") class="w3-bar-item w3-button">Home</a>
+    <a href="SalesCRUD.html" class="w3-bar-item w3-button">Sale Orders</a>     //Cambiar referencia
+
+
+        if (User.IsInRole("Supervisor") || User.IsInRole("Admin"))
+        {
+        <a href="ItemCRUD.html" class="w3-bar-item w3-button">Manage Items</a>      //Cambiar referencia
+        <a href="OrderCRUD.html" class="w3-bar-item w3-button">Purchase Orders</a>  //Cambiar referencia
+        }
+        if (User.IsInRole("Admin"))
+        {
+
+        <a href="UsersCRUD.html" class="w3-bar-item w3-button">Manage Users</a>     //Cambiar referencia
+        }
+    <a href="javascript:document.getElementById('logoutForm').submit()" class="w3-bar-item w3-button">Log Out</a>
+    }
+}
+
