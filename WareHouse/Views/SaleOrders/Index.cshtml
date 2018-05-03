@@ -1,38 +1,42 @@
 ﻿@model IEnumerable<WareHouse.Models.SaleOrder>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Sales Orders";
 }
 
-<h2>Index</h2>
+<div class="content-header">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="header-section">
+                <h1>@ViewBag.Title</h1>
+            </div>
+        </div>
+        <div class="col-sm-6 hidden-xs">
+            <div class="header-section">
+                <ul class="breadcrumb breadcrumb-top">
+                    <li>@Html.ActionLink("Create New", "Create")</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.SaleOrderStatus)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SaleOrderDate)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.SaleOrderStatus)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SaleOrderDate)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.SaleOrderID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.SaleOrderID })
-        </td>
-    </tr>
-}
-
-</table>
+<div class="row">
+    <div class="col-lg-12">
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-6">
+                <div class="widget">
+                    <div class="widget-content text-right clearfix">
+                        <h2 class="widget-heading h3"><strong>@Html.DisplayFor(modelItem => item.SaleOrderStatus)</strong></h2>
+                        <span class="text-muted">@Html.DisplayFor(modelItem => item.SaleOrderDate)</span>
+                        <p>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.SaleOrderID }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.SaleOrderID })
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

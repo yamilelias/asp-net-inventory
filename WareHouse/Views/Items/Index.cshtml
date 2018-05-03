@@ -1,68 +1,65 @@
 ﻿@model IEnumerable<WareHouse.Models.Item>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Items";
 }
 
-<h2>Index</h2>
+<div class="content-header">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="header-section">
+                <h1>@ViewBag.Title</h1>
+            </div>
+        </div>
+        <div class="col-sm-6 hidden-xs">
+            <div class="header-section">
+                <ul class="breadcrumb breadcrumb-top">
+                    <li>@Html.ActionLink("Create New", "Create")</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ItemName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ItemDesc)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ItemQTY)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ItemThres)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ItemSalePrice)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ItemPurchasePrice)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ItemPhoto)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ItemName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ItemDesc)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ItemQTY)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ItemThres)
-        </td>
-        <td>
-            $@Html.DisplayFor(modelItem => item.ItemSalePrice)
-        </td>
-        <td>
-            $@Html.DisplayFor(modelItem => item.ItemPurchasePrice)
-        </td>
-        <td>
-            <img src="@Html.Raw(item.ItemPhoto)" width="140" />
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ItemID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ItemID })
-        </td>
-    </tr>
-}
-
-</table>
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-lg-4">
+            <div class="widget">
+                <div class="widget-content themed-background-flat text-center">
+                    <a href="javascript:void(0)">
+                        <img src="@Html.Raw(item.ItemPhoto)" alt="avatar" class="img-circle img-thumbnail img-thumbnail-avatar-2x">
+                    </a>
+                    <h3 class="widget-heading text-light">@Html.DisplayFor(modelItem => item.ItemName)</h3>
+                    <h4 class="widget-heading text-light-op">@Html.DisplayFor(modelItem => item.ItemDesc)</h4>
+                </div>
+                <div class="widget-content">
+                    <div class="row text-center">
+                        <div class="col-xs-6">
+                            <h3 class="widget-heading"><small>@Html.DisplayNameFor(model => model.ItemQTY)</small><br><a href="javascript:void(0)" class="themed-color-flat">@Html.DisplayFor(modelItem => item.ItemQTY)</a></h3>
+                        </div>
+                        <div class="col-xs-6">
+                            <h3 class="widget-heading"><small>@Html.DisplayNameFor(model => model.ItemThres)</small><br><a href="javascript:void(0)" class="themed-color-flat">@Html.DisplayFor(modelItem => item.ItemThres)</a></h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="widget-content">
+                    <div class="row text-center">
+                        <div class="col-xs-6">
+                            <h3 class="widget-heading"><small>@Html.DisplayNameFor(model => model.ItemSalePrice)</small><br><a href="javascript:void(0)" class="themed-color-flat">$@Html.DisplayFor(modelItem => item.ItemSalePrice)</a></h3>
+                        </div>
+                        <div class="col-xs-6">
+                            <h3 class="widget-heading"><small>@Html.DisplayNameFor(model => model.ItemPurchasePrice)</small><br><a href="javascript:void(0)" class="themed-color-flat">65k</a></h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="widget-content themed-background-muted text-center">
+                    <div class="btn-group">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ItemID }, new { @class = "btn btn-effect-ripple btn-default" })
+                        @Html.ActionLink("Details", "Details", new { id = item.ItemID }, new { @class = "btn btn-effect-ripple btn-default" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

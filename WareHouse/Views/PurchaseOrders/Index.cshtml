@@ -1,44 +1,45 @@
 ﻿@model IEnumerable<WareHouse.Models.PurchaseOrder>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Purchase Orders";
 }
 
-<h2>Index</h2>
+<div class="content-header">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="header-section">
+                <h1>@ViewBag.Title</h1>
+            </div>
+        </div>
+        <div class="col-sm-6 hidden-xs">
+            <div class="header-section">
+                <ul class="breadcrumb breadcrumb-top">
+                    <li>@Html.ActionLink("Create New", "Create")</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.PurchaseOrderDesc)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PurchaseOrderStatus)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PurchaseOrderDate)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.PurchaseOrderDesc)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PurchaseOrderStatus)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PurchaseOrderDate)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.PurchaseOrderID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.PurchaseOrderID })
-        </td>
-    </tr>
-}
-
-</table>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-sm-6">
+                    <div class="widget">
+                        <div class="widget-content text-right clearfix">
+                            <h2 class="widget-heading h3"><strong>@Html.DisplayFor(modelItem => item.PurchaseOrderDesc)</strong></h2>
+                            <span class="text-danger">@Html.DisplayFor(modelItem => item.PurchaseOrderStatus)</span>
+                            <span class="text-muted">@Html.DisplayFor(modelItem => item.PurchaseOrderDate)</span>
+                            <p>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.PurchaseOrderID }) |
+                                @Html.ActionLink("Details", "Details", new { id = item.PurchaseOrderID })
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
