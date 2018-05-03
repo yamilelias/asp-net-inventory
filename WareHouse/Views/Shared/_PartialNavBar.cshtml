@@ -1,24 +1,28 @@
 ﻿@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    @Html.AntiForgeryToken()
+    <li>
+        <a href=@Url.Action("About", "Home") class=" active"><i class="gi gi-compass sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Home</span></a>
+    </li>
+    <li>
+        <a href=@Url.Action("Index", "SaleOrders") class=""><i class="fa fa-dollar sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Sale Orders</span></a>
+    </li>
+
+    if (User.IsInRole("Supervisor") || User.IsInRole("Administrator"))
     {
-        @Html.AntiForgeryToken()
-    <a href=@Url.Action("About", "Home") class="w3-bar-item w3-button">Home</a>
-    <a href=@Url.Action("Index", "SaleOrders") class="w3-bar-item w3-button">Sale Orders</a>     
+        <li>
+            <a href=@Url.Action("Index", "PurchaseOrders") class=""><i class="fa fa-file-word-o sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Purchase Orders</span></a>
+        </li>
+        <li>
+            <a href=@Url.Action("Index", "Items") class=""><i class="fa fa-check-square-o sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Items</span></a>
+        </li>
+    }
 
-
-        if (User.IsInRole("Supervisor") || User.IsInRole("Administrator"))
-        {
-            <a href=@Url.Action("Index", "PurchaseOrders") class="w3-bar-item w3-button">Purchase Orders</a>  
-            <a href=@Url.Action("Index", "Items") class="w3-bar-item w3-button">Manage Items</a>      
-        }
-        if (User.IsInRole("Administrator"))
-        {
-
-        <a href=@Url.Action("Index", "Account") class="w3-bar-item w3-button">Manage Users</a>     
-        }
-    <a href="javascript:document.getElementById('logoutForm').submit()" class="w3-bar-item w3-button">Log Out</a>
+    if (User.IsInRole("Administrator"))
+    {
+        <li>
+            <a href=@Url.Action("Index", "Account") class=""><i class="fa fa-users sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Manage Users</span></a>
+        </li>
     }
 }
-

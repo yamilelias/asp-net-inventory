@@ -2,96 +2,189 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>CASIO Store</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <style>
-        .w3-sidebar a {
-            font-family: "Roboto", sans-serif;
-        }
+    <meta charset="utf-8">
 
-        body, h1, h2, h3, h4, h5, h6, .w3-wide {
-            font-family: "Montserrat", sans-serif;
-        }
-    </style>
+    <title>AppUI - Web App Bootstrap Admin Template</title>
+
+    <meta name="description" content="AppUI is a Web App Bootstrap Admin Template created by pixelcave and published on Themeforest">
+    <meta name="author" content="pixelcave">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">
+
+    <!-- Icons -->
+    <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
+    <link rel="shortcut icon" href='@Url.Content("~/Content/img/favicon.png")'>
+    <link rel="apple-touch-icon" href='@Url.Content("~/Content/img/icon57.png")' sizes="57x57">
+    <link rel="apple-touch-icon" href='@Url.Content("~/Content/img/icon72.png")' sizes="72x72">
+    <link rel="apple-touch-icon" href='@Url.Content("~/Content/img/icon76.png")' sizes="76x76">
+    <link rel="apple-touch-icon" href='@Url.Content("~/Content/img/icon114.png")' sizes="114x114">
+    <link rel="apple-touch-icon" href='@Url.Content("~/Content/img/icon120.png")' sizes="120x120">
+    <link rel="apple-touch-icon" href='@Url.Content("~/Content/img/icon144.png")' sizes="144x144">
+    <link rel="apple-touch-icon" href='@Url.Content("~/Content/img/icon152.png")' sizes="152x152">
+    <link rel="apple-touch-icon" href='@Url.Content("~/Content/img/icon180.png")' sizes="180x180">
+    <!-- END Icons -->
+    <!-- Stylesheets -->
+    <!-- Bootstrap is included in its original form, unaltered -->
+    <link rel="stylesheet" href='@Url.Content("~/Content/bootstrap.min.css")'>
+
+    <!-- Related styles of various icon packs and plugins -->
+    <link rel="stylesheet" href='@Url.Content("~/Content/plugins.css")'>
+
+    <!-- The main stylesheet of this template. All Bootstrap overwrites are defined in here -->
+    <link rel="stylesheet" href='@Url.Content("~/Content/main.css")'>
+
+    <!-- Include a specific file here from css/themes/ folder to alter the default theme of the template -->
+    <!-- The themes stylesheet of this template (for using specific theme color in individual elements - must included last) -->
+    <link rel="stylesheet" href='@Url.Content("~/Content/themes.css")'>
+    <!-- END Stylesheets -->
+    <!-- Modernizr (browser feature detection library) -->
+    <script src='@Url.Content("~/Scripts/vendor/modernizr-3.3.1.min.js")'></script>
 </head>
 
-<body class="w3-content" style="max-width:1200px">
+<body>
+    <div id="page-wrapper" class="page-loading">
+        <div class="preloader">
+            <div class="inner">
+                <!-- Animation spinner for all modern browsers -->
+                <div class="preloader-spinner themed-background hidden-lt-ie10"></div>
 
-    <!-- Sidebar/menu -->
-    <nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" style="z-index:3;width:200px" id="mySidebar">
-        <div class="w3-container w3-display-container w3-padding-16">
-            <i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-display-topright"></i>
-            <h3 class="w3-wide"><b>CASIO</b></h3>
+                <!-- Text for IE9 -->
+                <h3 class="text-primary visible-lt-ie10"><strong>Loading..</strong></h3>
+            </div>
         </div>
-        <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
-            @Html.Partial("_PartialNavBar")
+        <div id="page-container" class="header-fixed-top sidebar-visible-lg-full">
+            <!-- Main Sidebar -->
+            <div id="sidebar">
+                <!-- Sidebar Brand -->
+                <div id="sidebar-brand" class="themed-background">
+                    <a href=@Url.Action("About", "Home") class="sidebar-title">
+                        <i class="fa fa-xing"></i> <span class="sidebar-nav-mini-hide">Orders<strong>Master</strong></span>
+                    </a>
+                </div>
+                <!-- END Sidebar Brand -->
+                <!-- Wrapper for scrolling functionality -->
+                <div id="sidebar-scroll">
+                    <!-- Sidebar Content -->
+                    <div class="sidebar-content">
+                        <!-- Sidebar Navigation -->
+                        <ul class="sidebar-nav">
+                            @Html.Partial("_PartialNavBar")
+                        </ul>
+                    </div>
+                </div>
+                <!-- Sidebar Extra Info -->
+                <div id="sidebar-extra-info" class="sidebar-content sidebar-nav-mini-hide">
+
+                    <div class="text-center">
+                        <small>Crafted with <i class="fa fa-heart text-danger"></i> by <a href="https://yamilelias.github.io/" target="_blank">yamilelias</a></small><br>
+                        <small><span id="year-copy"></span> &copy; <a href="http://goo.gl/RcsdAh" target="_blank">AppUI 2.9</a></small>
+                    </div>
+                </div>
+                <!-- END Sidebar Extra Info -->
+            </div>
+
+            <!-- Main Container -->
+            <div id="main-container">
+                <!-- Header -->
+                <header class="navbar navbar-inverse navbar-fixed-top">
+                    <!-- Left Header Navigation -->
+                    <ul class="nav navbar-nav-custom">
+                        <!-- Main Sidebar Toggle Button -->
+                        <li>
+                            <a href="javascript:void(0)" onclick="App.sidebar('toggle-sidebar');this.blur();">
+                                <i class="fa fa-ellipsis-v fa-fw animation-fadeInRight" id="sidebar-toggle-mini"></i>
+                                <i class="fa fa-bars fa-fw animation-fadeInRight" id="sidebar-toggle-full"></i>
+                            </a>
+                        </li>
+                        <!-- END Main Sidebar Toggle Button -->
+                        <!-- Header Link -->
+                        <li class="hidden-xs animation-fadeInQuick">
+                            <a href=""><strong>WELCOME</strong></a>
+                        </li>
+                        <!-- END Header Link -->
+                    </ul>
+                    <!-- END Left Header Navigation -->
+                    <!-- Right Header Navigation -->
+                    <ul class="nav navbar-nav-custom pull-right">
+                        <!-- Search Form -->
+                        <li>
+                            <form action="page_ready_search_results.html" method="post" class="navbar-form-custom">
+                                <input type="text" id="top-search" name="top-search" class="form-control" placeholder="Search..">
+                            </form>
+                        </li>
+                        <!-- END Search Form -->
+                        <!-- Alternative Sidebar Toggle Button -->
+                        <li>
+                            <a href="javascript:void(0)" onclick="App.sidebar('toggle-sidebar-alt');this.blur();">
+                                <i class="gi gi-settings"></i>
+                            </a>
+                        </li>
+                        <!-- END Alternative Sidebar Toggle Button -->
+                        <!-- User Dropdown -->
+                        <li class="dropdown">
+                            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src='@Url.Content("~/Content/img/placeholders/avatars/avatar9.jpg")' alt="avatar">
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li class="dropdown-header">
+                                    <strong>ADMINISTRATOR</strong>
+                                </li>
+                                <li>
+                                    <a href="page_app_email.html">
+                                        <i class="fa fa-inbox fa-fw pull-right"></i>
+                                        Inbox
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="page_app_social.html">
+                                        <i class="fa fa-pencil-square fa-fw pull-right"></i>
+                                        Profile
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="page_app_media.html">
+                                        <i class="fa fa-picture-o fa-fw pull-right"></i>
+                                        Media Manager
+                                    </a>
+                                </li>
+                                <li class="divider">
+                                <li>
+                                <li>
+                                    <a href="javascript:void(0)" onclick="App.sidebar('toggle-sidebar-alt');">
+                                        <i class="gi gi-settings fa-fw pull-right"></i>
+                                        Settings
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="page_ready_lock_screen.html">
+                                        <i class="gi gi-lock fa-fw pull-right"></i>
+                                        Lock Account
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="page_ready_login.html">
+                                        <i class="fa fa-power-off fa-fw pull-right"></i>
+                                        Log out
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- END User Dropdown -->
+                    </ul>
+                    <!-- END Right Header Navigation -->
+                </header>
+                <!-- END Header -->
+                <!-- Page content -->
+                <div id="page-content">
+                    @RenderBody()
+                </div>
+            </div>
         </div>
-    </nav>
-
-    <!-- Top menu on small screens -->
-    <header class="w3-bar w3-top w3-hide-large w3-black w3-xlarge">
-        <div class="w3-bar-item w3-padding-24 w3-wide">CASIO</div>
-        <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding-24 w3-right" onclick="w3_open()"><i class="fa fa-bars"></i></a>
-    </header>
-
-    <!-- Overlay effect when opening sidebar on small screens -->
-    <div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
-
-    <!-- !PAGE CONTENT! -->
-    <div class="w3-main" style="margin-left:250px">
-   
-        <!-- Push down content on small screens -->
-        <div class="w3-hide-large" style="margin-top:83px"></div>
-
-        <!-- Top header -->
-        <header class="w3-container w3-xlarge">
-           
-        </header>
-
-        <!--content-->
-        <div class="container body-content">
-            @RenderBody()
-            <hr />
-        </div>
-
-        <!-- Footer -->
-        <p>&copy; @DateTime.Now.Year - CASIO</p>
-        
-        <!-- End page content -->
     </div>
-    
 
-    <script>
-// Accordion
-function myAccFunc() {
-    var x = document.getElementById("demoAcc");
-    if (x.className.indexOf("w3-show") == -1) {
-        x.className += " w3-show";
-    } else {
-        x.className = x.className.replace(" w3-show", "");
-    }
-}
-
-// Click on the "Jeans" link on page load to open the accordion for demo purposes
-document.getElementById("myBtn").click();
-
-
-// Script to open and close sidebar
-function w3_open() {
-    document.getElementById("mySidebar").style.display = "block";
-    document.getElementById("myOverlay").style.display = "block";
-}
-
-function w3_close() {
-    document.getElementById("mySidebar").style.display = "none";
-    document.getElementById("myOverlay").style.display = "none";
-}
-    </script>
-
+    @Scripts.Render("~/Scripts/vendor/jquery-2.2.4.min.js");
+    @Scripts.Render("~/Scripts/vendor/bootstrap.min.js");
+    @Scripts.Render("~/Scripts/plugins.js");
+    @Scripts.Render("~/Scripts/app.js");
 </body>
 </html>
