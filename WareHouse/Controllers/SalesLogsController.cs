@@ -68,14 +68,12 @@ namespace WareHouse.Controllers
                 db.SaveChanges();
                     if(items.ItemQTY < items.ItemThres)
                     {
-                        MailMessage mail = new MailMessage();
+                        MailMessage mail = new MailMessage("no-reply@ordersmaster.mx", "A01561056@itesm.mx"));
                         SmtpClient client = new SmtpClient();
                         client.Port = 25;
                         client.DeliveryMethod = SmtpDeliveryMethod.Network;
                         client.UseDefaultCredentials = false;
                         client.Host = "localhost";
-                        mail.To.Add(new MailAddress("A00759294@itesm.mx"));
-                        mail.From = new MailAddress("A00759294@itesm.mx");
                         mail.Subject = "WARNING, one of your items has reached its threshold: " + items.ItemName;
                         mail.Body = mail.Body = "The item " + items.ItemName + " is low in stock, you have " + items.ItemQTY + " and its threshold is " + items.ItemThres + " , order more.";
                         mail.IsBodyHtml = true;
@@ -89,11 +87,7 @@ namespace WareHouse.Controllers
                 {
                     ViewBag.mensaje = "0";
                     salesLog.SaleOrderID = id;
-                    
-
                 }
-
-               
             }
 
             ViewBag.ItemID = new SelectList(db.Items, "ItemID", "ItemName", salesLog.ItemID);
