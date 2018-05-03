@@ -6,7 +6,7 @@ using System.Web;
 
 namespace WareHouse.Models
 {
-    public enum Status
+    public enum SaleStatus
     {
         Sold, Returned
     }
@@ -18,7 +18,7 @@ namespace WareHouse.Models
 
         [Required]
         [Display(Name = "Sale order status")]
-        public Status? SaleOrderStatus { get; set; }
+        public SaleStatus? SaleOrderStatus { get; set; }
 
         [Required]
         [DataType(DataType.Date)]

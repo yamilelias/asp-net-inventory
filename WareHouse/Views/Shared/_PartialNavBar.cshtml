@@ -5,18 +5,18 @@
     {
         @Html.AntiForgeryToken()
     <a href=@Url.Action("About", "Home") class="w3-bar-item w3-button">Home</a>
-    <a href="SalesCRUD.html" class="w3-bar-item w3-button">Sale Orders</a>     //Cambiar referencia
+    <a href=@Url.Action("Index", "SaleOrders") class="w3-bar-item w3-button">Sale Orders</a>     
 
 
-        if (User.IsInRole("Supervisor") || User.IsInRole("Admin"))
+        if (User.IsInRole("Supervisor") || User.IsInRole("Administrator"))
         {
-        <a href="ItemCRUD.html" class="w3-bar-item w3-button">Manage Items</a>      //Cambiar referencia
-        <a href="OrderCRUD.html" class="w3-bar-item w3-button">Purchase Orders</a>  //Cambiar referencia
+            <a href=@Url.Action("Index", "PurchaseOrders") class="w3-bar-item w3-button">Purchase Orders</a>  
+            <a href=@Url.Action("Index", "Items") class="w3-bar-item w3-button">Manage Items</a>      
         }
-        if (User.IsInRole("Admin"))
+        if (User.IsInRole("Administrator"))
         {
 
-        <a href="UsersCRUD.html" class="w3-bar-item w3-button">Manage Users</a>     //Cambiar referencia
+        <a href=@Url.Action("Index", "Account") class="w3-bar-item w3-button">Manage Users</a>     
         }
     <a href="javascript:document.getElementById('logoutForm').submit()" class="w3-bar-item w3-button">Log Out</a>
     }

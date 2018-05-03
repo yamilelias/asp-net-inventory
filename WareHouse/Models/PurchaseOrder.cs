@@ -6,15 +6,15 @@ using System.Web;
 
 namespace WareHouse.Models
 {
-    public class PurchaseOrder
-    {
-        public enum Status
+    
+        public enum PurchaseStatus
         {
             Ordered, Delivered, Cancelled
         }
-        public class SaleOrder
+        public class PurchaseOrder
         {
             [Required]
+            [Key]
             [Display(Name = "Purchase order ID")]
             public int PurchaseOrderID { get; set; }
 
@@ -25,7 +25,7 @@ namespace WareHouse.Models
 
             [Required]
             [Display(Name = "Purchase order status")]
-            public Status? PurchaseOrderStatus { get; set; }
+            public PurchaseStatus? PurchaseOrderStatus { get; set; }
 
             [Required]
             [DataType(DataType.Date)]
@@ -36,4 +36,3 @@ namespace WareHouse.Models
             public virtual ICollection<PurchaseLog> PurchaseLogs { get; set; }
         }
     }
-}

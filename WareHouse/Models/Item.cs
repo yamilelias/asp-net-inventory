@@ -9,6 +9,7 @@ namespace WareHouse.Models
     public class Item
     {
         [Required]
+        [Key]
         [Display(Name = "Item ID")]
         public int ItemID { get; set; }
 
@@ -24,19 +25,19 @@ namespace WareHouse.Models
 
         [Required]
         [Display(Name = "Item quantity")]
-        public uint ItemQTY { get; set; }
+        public int ItemQTY { get; set; }
 
         [Required]
         [Display(Name = "Item threshold")]
-        public uint ItemThres { get; set; }
+        public int ItemThres { get; set; }
 
         [Required]
         [Display(Name = "Item sale price")]
-        public uint ItemSalePrice { get; set; }
+        public int ItemSalePrice { get; set; }
 
         [Required]
         [Display(Name = "Item purchase price")]
-        public uint ItemPurchasePrice { get; set; }
+        public int ItemPurchasePrice { get; set; }
 
         [Required]
         [Display(Name = "Item photo")]

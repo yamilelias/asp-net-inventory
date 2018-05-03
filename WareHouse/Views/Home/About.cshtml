@@ -1,7 +1,32 @@
-﻿@{
-    ViewBag.Title = "About";
-}
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+﻿@model IEnumerable<WareHouse.Models.Item>
 
-<p>Use this area to provide additional information.</p>
+<div class="card">
+    <div class="header">
+        <h4 class="title">Low inventory items</h4>
+    </div>
+
+    <div class="ct-chart ct-golden-section" id="chart1">
+
+        <script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+        <script>
+                new Chartist.Bar('#chart1', {
+                labels: [
+              @foreach (var item in Model)
+{
+    @Html.Raw("'" +item.ItemName+"',")
+}
+           ],
+            series: [[
+                @foreach (var item in Model)
+{
+    @Html.Raw("'" +item.ItemQTY+"',")
+}
+            ]]
+        }, {
+       });
+
+        </script>
+
+    </div>
+
+</div>

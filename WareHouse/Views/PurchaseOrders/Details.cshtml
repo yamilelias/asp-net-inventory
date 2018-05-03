@@ -1,0 +1,96 @@
+﻿@model WareHouse.Models.PurchaseOrder
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Purchase Order</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PurchaseOrderDesc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PurchaseOrderDesc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PurchaseOrderStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PurchaseOrderStatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PurchaseOrderDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PurchaseOrderDate)
+        </dd>
+        <dd>
+            <table class="table">
+                <tr>
+                    <th class="text-center">Item</th>
+                    <th>|</th>
+                    <th class="text-center">Price</th>
+                    <th>|</th>
+                    <th class="text-center">Quantity Purchased</th>
+                    <th>|</th>
+                    <th class="text-center">Total Price</th>
+                </tr>
+                @{ double total = 0;}
+                @foreach (var item in Model.PurchaseLogs)
+                {
+                    <tr>
+                        <td class="text-center">
+                            @Html.DisplayFor(modelItem => item.Item.ItemName)
+                        </td>
+                        <td></td>
+                        <td class="text-center">
+                            $@Html.DisplayFor(modelItem => item.Item.ItemPurchasePrice)
+                        </td>
+                        <td></td>
+                        <td class="text-center">
+                            @Html.DisplayFor(modelItem => item.ItemOrderQTY)
+                        </td>
+                        <td></td>
+                        <td class="text-center">
+                            @string.Format("{0:c}", (item.ItemOrderQTY * item.Item.ItemPurchasePrice))
+                        </td>
+                        <td></td>
+                        @{total += (item.ItemOrderQTY * item.Item.ItemPurchasePrice);
+                        }
+                    </tr>
+                            }
+                <tr>
+                    <td class="text-center">
+
+                    </td>
+                    <td></td>
+                    <td class="text-center">
+
+                    </td>
+                    <td></td>
+                    <td class="text-center">
+
+                    </td>
+                    <td></td>
+                    <td class="text-center">
+                        Total = @string.Format("{0:c}", total)
+                    </td>
+                </tr>
+            </table>
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PurchaseOrderID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

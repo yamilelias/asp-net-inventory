@@ -9,10 +9,12 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using WareHouse.Models;
+using System.Net;
+using System.Data.Entity;
 
 namespace WareHouse.Controllers
 {
-    [Authorize]
+    
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -52,6 +54,98 @@ namespace WareHouse.Controllers
             }
         }
 
+        // GET: Users
+        [Authorize(Roles = "Administrator")]
+        public ActionResult Index()
+        {
+            var context = new ApplicationDbContext();
+            var users = context.Users.ToList();
+            return View(users);
+        }
+
+        // GET: Users/Details/5
+        [Authorize(Roles = "Administrator")]
+        public ActionResult Details(String id)      //La llave es String
+        {
+            var context = new ApplicationDbContext();     //Contexto de base de datos
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ApplicationUser user = context.Users.Find(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            return View(user);
+        }
+
+        // GET: Items/Edit/5
+        [Authorize(Roles = "Administrator")]
+        public ActionResult Edit(String id)
+        {
+            var db = new ApplicationDbContext();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ApplicationUser user = db.Users.Find(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            return View(user);
+        }
+
+        // POST: Items/Edit/5
+        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
+        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
+        public ActionResult Edit([Bind(Include = "Email")] ApplicationUser user)
+        {
+            var db = new ApplicationDbContext();
+            if (ModelState.IsValid)
+            {
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();                                //ERROR RARO NO SE LOL
+                return RedirectToAction("Index");
+            }
+            return View(user);
+        }
+
+        // GET: Users/Delete/5
+        [Authorize(Roles = "Administrator")]
+        public ActionResult Delete(String id)
+        {
+            var db = new ApplicationDbContext();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ApplicationUser user = db.Users.Find(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            return View(user);
+        }
+
+        // POST: Users/Delete/5
+        [Authorize(Roles = "Administrator")]
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(String id)
+        {
+            var db = new ApplicationDbContext();
+            ApplicationUser user = db.Users.Find(id);
+            db.Users.Remove(user);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
         //
         // GET: /Account/Login
         [AllowAnonymous]
@@ -79,7 +173,7 @@ namespace WareHouse.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    return RedirectToAction("About", "Home");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -124,7 +218,8 @@ namespace WareHouse.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(model.ReturnUrl);
+                    return RedirectToAction("About", "Home");
+                //return RedirectToLocal(model.ReturnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.Failure:
@@ -139,6 +234,8 @@ namespace WareHouse.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            var db = new ApplicationDbContext();
+            ViewBag.Name = new SelectList(db.Roles.ToList(), "Name", "Name");
             return View();
         }
 
@@ -149,22 +246,19 @@ namespace WareHouse.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            var db = new ApplicationDbContext();
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // Para obtener más información sobre cómo habilitar la confirmación de cuenta y el restablecimiento de contraseña, visite http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Enviar correo electrónico con este vínculo
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirmar cuenta", "Para confirmar la cuenta, haga clic <a href=\"" + callbackUrl + "\">aquí</a>");
+                    //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    await this.UserManager.AddToRoleAsync(user.Id, model.UserRoles);
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("About", "Home");
                 }
+                ViewBag.Name = new SelectList(db.Roles.ToList(), "Name", "Name");
                 AddErrors(result);
             }
 
@@ -172,6 +266,7 @@ namespace WareHouse.Controllers
             return View(model);
         }
 
+       
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
@@ -422,7 +517,6 @@ namespace WareHouse.Controllers
 
             base.Dispose(disposing);
         }
-
         #region Aplicaciones auxiliares
         // Se usa para la protección XSRF al agregar inicios de sesión externos
         private const string XsrfKey = "XsrfId";
