@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
 
-    <title>AppUI - Web App Bootstrap Admin Template</title>
+    <title>OrdersMaster</title>
 
     <meta name="description" content="AppUI is a Web App Bootstrap Admin Template created by pixelcave and published on Themeforest">
     <meta name="author" content="pixelcave">
@@ -186,5 +186,9 @@
     @Scripts.Render("~/Scripts/vendor/bootstrap.min.js");
     @Scripts.Render("~/Scripts/plugins.js");
     @Scripts.Render("~/Scripts/app.js");
+    @Scripts.Render("~/Scripts/pages/uiTables.js");
+    <script>$(function () { UiTables.init(); });</script>
+    @Scripts.Render("~/Scripts/pages/compCharts.js");
+    <script>$(function () { CompCharts.init(); });</script>
 </body>
 </html>
